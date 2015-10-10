@@ -1,0 +1,120 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<malloc.h>
+#include<string.h>
+typedef struct stu
+{
+	int score[5];
+	struct stu *next;
+}stu;
+
+void draw()//主界面
+{
+	printf("\t                               1.建立                  \n");
+	printf("\t                               2.输出                  \n");
+	printf("\t                               3.逆序                  \n");
+}
+struct stu *creat()
+{
+    struct stu *head, *p1, *p2;
+	p1 = p2 = (struct stu * )malloc(sizeof(stu));
+	head = NULL;
+	printf("请依次输入6个成绩(学号输入为 0 时结束):\n");
+	scanf("%d", &p1->score[0]);
+	if(p1-> score[0] == 0) return 0;
+    scanf("%d %d %d %d %d",&p1->score[1], &p1->score[2], &p1->score[3], &p1->score[4], &p1->score[5]);
+     while(p1->score[0] != 0)
+	 {
+	  
+    if(NULL==head)
+        {
+            head=p1;
+        }
+        else
+        {
+            p2->next=p1;
+        }
+        p2=p1;
+        p1=(struct stu *)malloc(sizeof(stu));
+		scanf("%d", &p1->score[0]);
+		if(p1-> score[0] == 0) break;
+		scanf("%d %d %d %d %d",&p1->score[1], &p1->score[2], &p1->score[3], &p1->score[4], &p1->score[5]);
+        
+    } 
+  	p2->next = NULL;
+	return head;
+} 
+void show1(struct stu *head)//全部打印
+{
+    struct stu *a = head;
+	if(head == NULL) {printf("学生档案为空！\n");}
+	if(head != NULL)
+	{
+			printf("\n成绩一\t成绩二\t成绩三\t成绩四\t成绩五\t成绩六\n");
+		while(a != NULL) 
+		{	
+			
+			printf("%d %d %d %d %d %d\n",a->score[0], a->score[1], a->score[2],a->score[3],a->score[4], a->score[5]);
+			a = a->next;
+		}
+	}
+}
+
+void show(struct stu *head)//含 show1() 输入学号打印。和 show2()输入学号打印。
+{
+	int a ;
+	printf("\n请选择打印方式(输入0时返回)：\n 1. 输入学号打印。 \n");
+	scanf("%d", &a);
+	while(a != 0)
+	{
+		if(a == 1)
+		{ 
+			show1(head);
+		}
+		else 
+			printf("你的输入方式不对!\n");
+		
+		printf("\n请选择打印方式(输入0时返回)：\n 1. 输入学号打印。\n");
+		scanf("%d", &a);
+	}
+}
+
+
+struct stu *reverse(struct stu *head) 
+{
+	struct stu *s,*t;
+	s = head; 
+    head = NULL; 
+while(s)
+ {
+t = s; 
+s = s->next; 
+t->next = head; 
+head = t;
+}
+return head; 
+} 
+
+
+int main()
+{
+	
+	char c;
+	stu *head;
+draw();
+while(1)
+		{
+			c=getch();
+			switch(c)
+			{
+			case '1':head = creat();system("cls");draw();break;
+			case '2':show(head);system("cls");draw();break;
+			case '3':head = reverse(head);system("cls");draw();break;
+			default :printf("\n\t您输入有误，请重新输入！\n");
+			}
+			//if(c=='9') break;			
+		}
+	
+
+}
